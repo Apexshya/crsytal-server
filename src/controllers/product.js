@@ -9,6 +9,7 @@ const { multiFilesDelete } = require("../config/uploader");
 const blurDataUrl = require("../config/getBlurDataURL");
 const getBlurDataURL = require("../config/getBlurDataURL");
 const { getAdmin } = require("../config/getUser");
+
 const getProducts = async (req, res) => {
   try {
     const query = req.query; // Extract query params from request
@@ -124,6 +125,7 @@ const getProducts = async (req, res) => {
           name: 1,
           slug: 1,
           colors: 1,
+          sizes:1,
           discount: 1,
           likes: 1,
           priceSale: 1,
