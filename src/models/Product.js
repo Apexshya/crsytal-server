@@ -52,15 +52,19 @@ const productSchema = new mongoose.Schema(
     // },
     price: {
       type: Number,
-      required: [true, "Price is required."],
+      // required: [true, "Price is required."],
     },
     priceSale: {
       type: Number,
-      required: [true, "Sale price is required."],
+      // required: [true, "Sale price is required."],
+    },
+    priceWholeSale: {
+      type: Number,
+      // required: [true, "Sale price is required."],
     },
     available: {
       type: Number,
-      required: [true, "Available quantity is required."],
+      // required: [true, "Available quantity is required."],
     },
     sold: {
       type: Number,
@@ -72,12 +76,7 @@ const productSchema = new mongoose.Schema(
         ref: "Review",
       },
     ],
-
-    // shop: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: 'Shop',
-    //   required: true,
-    // },
+    
     images: [
       {
         url: {
@@ -109,20 +108,20 @@ const productSchema = new mongoose.Schema(
       },
     },
     // size guideee
-    sizeGuide: {
-      _id: {
-        type: String,
-        required: [true, "image-id-required-error"],
-      },
-      url: {
-        type: String,
-        required: [true, "image-url-required-error"],
-      },
-      blurDataURL: {
-        type: String,
-        required: [true, "image-blur-data-url-required-error"],
-      },
-    },
+    // sizeGuide: {
+    //   _id: {
+    //     type: String,
+    //     required: [true, "image-id-required-error"],
+    //   },
+    //   url: {
+    //     type: String,
+    //     required: [true, "image-url-required-error"],
+    //   },
+    //   blurDataURL: {
+    //     type: String,
+    //     required: [true, "image-blur-data-url-required-error"],
+    //   },
+    // },
 
     colors: [
       {
@@ -130,35 +129,36 @@ const productSchema = new mongoose.Schema(
         value: String,
       },
     ],
+    // sizes: [
+    //   {
+    //     value: String,
+    //     label: String,
+    //   },
+    // ],
+    // 🔹 Size-based pricing
     sizes: [
       {
-        value: String,
-        label: String,
+        value: { type: String,  }, // e.g. "M"
+        label: { type: String }, // e.g. "Medium"
+        price: { type: Number,  }, // retail price
+        PriceSale: { type: Number,  }, // discounted retail price
+        PriceWholeSale: { type: Number,  }, // wholesale price
+        available: { type: Number, default: 0 }, // stock for this size
+        sold: { type: Number, default: 0 }, // sold count
       },
     ],
     productDetails: {
       description: {
         type: String,
       },
-      materials: {
+      measurement: {
         type: String,
       },
-      length: {
+      weight: {
         type: String,
       },
-      stretchFactor: {
+      freepeople: {
         type: String,
-      },
-      care: {
-        type: String,
-      },
-      modelDetails: {
-        size: {
-          type: String,
-        },
-        height: {
-          type: String,
-        },
       },
     },
   },

@@ -289,39 +289,82 @@ const getProductsByAdmin = async (request, response) => {
   }
 };
 
+// const createProductByAdmin = async (req, res) => {
+//   try {
+//     const admin = await getAdmin(req, res);
+
+//     const { images, ...body } = req.body;
+//     // const blurDataURL = await getBlurDataURL(sizeGuide.url);
+
+//     const updatedImages = await Promise.all(
+//       images.map(async (image) => {
+//         const blurDataURL = await blurDataUrl(image.url);
+//         return { ...image, blurDataURL };
+//       })
+//     );
+//     const data = await Product.create({
+//       ...body,
+//       images: updatedImages,
+//       image: updatedImages[0],
+//       // sizeGuide: {
+//       //   ...sizeGuide,
+//       //   blurDataURL,
+//       // },
+//       likes: 0,
+//     });
+
+//     res.status(201).json({
+//       success: true,
+//       message: "Product Created",
+//       data: data,
+//     });
+//   } catch (error) {
+//     res.status(400).json({ success: false, message: error.message });
+//   }
+// };
+
 const createProductByAdmin = async (req, res) => {
   try {
     const admin = await getAdmin(req, res);
 
-    const { images, sizeGuide, ...body } = req.body;
-    const blurDataURL = await getBlurDataURL(sizeGuide.url);
+    const { images, sizes, ...body } = req.body;
 
+    // ✅ Process images with blurDataURL
     const updatedImages = await Promise.all(
       images.map(async (image) => {
         const blurDataURL = await blurDataUrl(image.url);
         return { ...image, blurDataURL };
       })
     );
+
+    // ✅ Format sizes to make sure they are stored correctly
+    const formattedSizes = sizes?.map((s) => ({
+      value: s.value,
+      size: s.size,
+      price: Number(s.price),
+      PriceWholeSale: s.PriceWholeSale ? Number(s.PriceWholeSale) : null,
+      available: Number(s.available || 0),
+    })) || [];
+
     const data = await Product.create({
       ...body,
+      sizes: formattedSizes,
       images: updatedImages,
       image: updatedImages[0],
-      sizeGuide: {
-        ...sizeGuide,
-        blurDataURL,
-      },
       likes: 0,
     });
 
     res.status(201).json({
       success: true,
       message: "Product Created",
-      data: data,
+      data,
     });
   } catch (error) {
+    console.error("Error creating product:", error);
     res.status(400).json({ success: false, message: error.message });
   }
 };
+
 
 const getOneProductByAdmin = async (req, res) => {
   try {
