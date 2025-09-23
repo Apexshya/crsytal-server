@@ -58,10 +58,7 @@ const productSchema = new mongoose.Schema(
       type: Number,
       // required: [true, "Sale price is required."],
     },
-    priceWholeSale: {
-      type: Number,
-      // required: [true, "Sale price is required."],
-    },
+    
     available: {
       type: Number,
       // required: [true, "Available quantity is required."],
@@ -142,8 +139,10 @@ const productSchema = new mongoose.Schema(
         label: { type: String }, // e.g. "Medium"
         price: { type: Number,  }, // retail price
         PriceSale: { type: Number,  }, // discounted retail price
-        PriceWholeSale: { type: Number,  }, // wholesale price
         available: { type: Number, default: 0 }, // stock for this size
+        freepeople:{type: String},
+        measurement:{type: String},
+        weight:{type: String},
         sold: { type: Number, default: 0 }, // sold count
       },
     ],

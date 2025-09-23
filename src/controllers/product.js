@@ -342,9 +342,12 @@ const createProductByAdmin = async (req, res) => {
     // ✅ Format sizes to make sure they are stored correctly
     const formattedSizes = sizes?.map((s) => ({
       value: s.value,
+      label:s.label,
       size: s.size,
+      measurement:s.measurement,
+      weight:s.weight,
+      freepeople:s.freepeople,
       price: Number(s.price),
-      PriceWholeSale: s.PriceWholeSale ? Number(s.PriceWholeSale) : null,
       available: Number(s.available || 0),
     })) || [];
 
